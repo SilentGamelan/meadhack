@@ -4,6 +4,9 @@
 libtcodpy/
 .vscode/
 
+# running list of changes for current commit msg
+changes_list.txt 
+
 #---------------------------------------------
 # Below is the github python.gitigore template
 #---------------------------------------------
