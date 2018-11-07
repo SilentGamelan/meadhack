@@ -9,6 +9,8 @@ class Tile:
     def __init__(self, blocked, block_sight=None):
         self.blocked = blocked
 
+        self.explored = False
+        
         # By default, if a tile blocks movement, it also blocks vision
         if block_sight is None:
             block_sight = blocked
