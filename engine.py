@@ -36,9 +36,10 @@ def main():
     }
 
     # Create map Entities
-    player = Entity(int(screen_width /2), int(screen_height / 2), '@', libtcod.green)
-    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.blue)
-    entities = [npc, player]
+    max_monsters_per_room = 3
+
+    player = Entity(0, 0, '@', libtcod.white)
+    entities = [player]
 
     # Console settings and initialisation
     libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GRAYSCALE | libtcod.FONT_LAYOUT_TCOD)
@@ -50,7 +51,7 @@ def main():
     
     # Create the map object and trigger dungeon creation
     game_map = GameMap(map_width, map_height)
-    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player)
+    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room)
 
     fov_recompute = True
     fov_map = initialize_fov(game_map)
