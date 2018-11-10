@@ -35,7 +35,7 @@ def main():
         'light_ground': libtcod.Color(200, 180, 50)
     }
 
-    # Create map Entities
+    # Create player entity and entities list - monsters appended at map creation
     max_monsters_per_room = 3
 
     player = Entity(0, 0, '@', libtcod.white, 'my dude', blocks=True)
