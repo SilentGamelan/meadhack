@@ -5,6 +5,7 @@ from input_handlers import handle_keys
 from map_objects.game_map import GameMap
 from render_functions import clear_all, render_all
 from fov_functions import initialize_fov, recompute_fov
+from game_states import GameStates
 
 def main():
 
@@ -60,6 +61,9 @@ def main():
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
+    
+    game_state = GameStates.PLAYERS_TURN
+
     # Main Loop
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
@@ -81,7 +85,7 @@ def main():
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
 
-        if move:
+        if move and game_state == GameStates.PLAYERS_TURN:
             dx, dy = move
             destination_x = player.x + dx
             destination_y = player.y + dy
@@ -97,6 +101,8 @@ def main():
                     player.move(dx, dy)
                     fov_recompute = True
 
+                game_state = GameStates.ENEMY_TURN
+
 
         if exit:
             return True
@@ -104,6 +110,12 @@ def main():
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen)
 
+        if game_state == GameStates.ENEMY_TURN:
+            for entity in entities:
+                if entity != player:
+                    print('The ' + entity.name + ' scratches itself in an unpleasant fashion.')
+
+            game_state = GameStates.PLAYERS_TURN
 
 
 
