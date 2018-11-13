@@ -1,5 +1,6 @@
 import libtcodpy as libtcod
 
+from components.fighter import Fighter
 from entity import Entity, get_blocking_entities_at_location
 from input_handlers import handle_keys
 from map_objects.game_map import GameMap
@@ -21,6 +22,7 @@ def main():
     room_max_size = 10
     room_min_size = 6
     max_rooms = 30
+    max_monsters_per_room = 3
 
     # FOV settings - passed to libtcod library
     fov_algorithm = 0
@@ -35,10 +37,9 @@ def main():
         'light_ground': libtcod.Color(200, 180, 50)
     }
 
-    # Create player entity and entities list - monsters appended at map creation
-    max_monsters_per_room = 3
-
-    player = Entity(0, 0, '@', libtcod.white, 'my dude', blocks=True)
+    # Create player entity/entities list - monsters appended at map creation
+    fighter_component = Fighter(hp=30, defense=2, power=5)
+    player = Entity(0, 0, '@', libtcod.white, 'my dude', blocks=True, fighter=fighter_component)
     entities = [player]
 
     # Console settings and initialisation
@@ -112,9 +113,9 @@ def main():
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
-                if entity != player:
-                    print('The ' + entity.name + ' scratches itself in an unpleasant fashion.')
-
+                if entity.ai:
+                    entity.ai.take_turn()
+                    
             game_state = GameStates.PLAYERS_TURN
 
 
