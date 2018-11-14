@@ -1,6 +1,6 @@
 import libtcodpy as libtcod
 
-
+# TODO: add diagonal buttons
 def handle_keys(key):
     # movement keys
     if key.vk == libtcod.KEY_UP:
