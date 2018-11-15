@@ -8,6 +8,7 @@ from map_objects.game_map import GameMap
 from render_functions import clear_all, render_all
 from fov_functions import initialize_fov, recompute_fov
 from game_states import GameStates
+from render_functions import RenderOrder
 
 def main():
 
@@ -40,7 +41,7 @@ def main():
 
     # Create player entity/entities list - monsters appended at map creation
     fighter_component = Fighter(hp=30, defense=2, power=5)
-    player = Entity(0, 0, '@', libtcod.white, 'my dude', blocks=True, fighter=fighter_component)
+    player = Entity(0, 0, '@', libtcod.white, 'my dude', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component)
     entities = [player]
 
     # Console settings and initialisation
